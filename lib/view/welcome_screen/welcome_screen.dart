@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:innovators/data/models/user_model.dart';
-import 'package:innovators/view/login/login_screen.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:innovators/view/views.dart';
 
 import '../../data/core.dart';
 
@@ -42,25 +43,44 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Main Screen"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text("${loggedInUser.firstName} ${loggedInUser.secondName}"),
-            Text("${loggedInUser.email}"),
-            TextButton(
-                onPressed: () {
-                  logout(context);
-                },
-                child: Text("Logout"))
-          ],
+    double screenHeight = MediaQuery.of(context).size.height;
+    return Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: AssetImage('assets/images/welcome.jpg'),
+          ),
         ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Center(
+            child: Padding(
+              padding: EdgeInsets.only(top: screenHeight - 200),
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  primary: Colors.white,
+                ),
+                child: const Text(
+                  "PRESS TO CONTINUE",
+                  style: TextStyle(fontSize: 25, fontFamily: ''),
+                ),
+                onPressed: () {
+                  if (loggedInUser.userMode == "employee") {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => EmployerMainScreen()));
+                  } else if (loggedInUser.userMode == "founder") {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => FounderMainScreen()));
+                  } else {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => ServiceMainScreen()));
+                  }
+                },
+              ),
+            ),
+          ),
+        ) // This trailing comma makes auto-formatting nicer for build methods.
+        );
   }
 
   Future<void> logout(BuildContext context) async {
