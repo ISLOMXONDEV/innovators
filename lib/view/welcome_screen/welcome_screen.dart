@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:innovators/data/models/user_model.dart';
+import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:innovators/view/views.dart';
 
 import '../../data/core.dart';
+import '../../data/provider_values.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String routeName = "/welcome_screen";
@@ -16,8 +18,10 @@ class WelcomeScreen extends StatefulWidget {
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
+  bool _isLoading = true;
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel? loggedInUser = UserModel();
+  UserResumeCard? userResumeCard = UserResumeCard();
 
   _modeInfo(String? userMode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -38,7 +42,25 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       });
     });
 
-    _modeInfo(loggedInUser.userMode);
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(user!.uid)
+        .collection("resume")
+        .doc(user!.uid)
+        .get()
+        .then((value) {
+      setState(() {
+        userResumeCard = UserResumeCard.fromMap(value.data());
+      });
+    });
+
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+
+    _modeInfo(loggedInUser?.userMode);
   }
 
   @override
@@ -51,45 +73,56 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             image: AssetImage('assets/images/welcome.jpg'),
           ),
         ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: screenHeight - 200),
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.white,
-                ),
-                child: const Text(
-                  "PRESS TO CONTINUE",
-                  style: TextStyle(fontSize: 25, fontFamily: ''),
-                ),
-                onPressed: () {
-                  if (loggedInUser.userMode == "employee") {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => EmployerMainScreen()));
-                  } else if (loggedInUser.userMode == "founder") {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => FounderMainScreen()));
-                  } else {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => ServiceMainScreen()));
-                  }
+        child: _isLoading
+            ? const CircularProgressIndicator()
+            : Consumer<ScreenIndexProvider>(
+                builder: (context, provider, child) {
+                  return Scaffold(
+                    backgroundColor: Colors.transparent,
+                    body: Center(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: screenHeight - 200),
+                        child: TextButton(
+                          style: TextButton.styleFrom(
+                            primary: Colors.white,
+                          ),
+                          child: const Text(
+                            "PRESS TO CONTINUE",
+                            style: TextStyle(fontSize: 25, fontFamily: ''),
+                          ),
+                          onPressed: () async {
+                            await provider.updateUser(loggedInUser);
+                            var result = userResumeCard?.positionName;
+                            if (result != null) {
+                              await provider.resumeDefine(userResumeCard);
+                              provider.hasResume = true;
+                            }
+
+                            if (loggedInUser != null &&
+                                userResumeCard != null) {
+                              if (loggedInUser?.userMode == "service") {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            ServiceMainScreen()));
+                              } else if (loggedInUser?.userMode == "founder") {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            FounderMainScreen()));
+                              } else {
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EmployerMainScreen()));
+                              }
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                  );
                 },
-              ),
-            ),
-          ),
-        ) // This trailing comma makes auto-formatting nicer for build methods.
-        );
-  }
-
-  Future<void> logout(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(prefs.getString(USER_MODE));
-    prefs.remove(USER_MODE);
-
-    await FirebaseAuth.instance.signOut();
-    Navigator.pushNamedAndRemoveUntil(
-        context, LoginScreen.routeName, ModalRoute.withName('/'));
+              ));
   }
 }

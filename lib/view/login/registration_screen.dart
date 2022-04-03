@@ -200,12 +200,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               ),
                             ),
                             userMode(),
-                            // Container(
-                            //   height: 15,
-                            //   padding: const EdgeInsets.only(
-                            //       top: 5, left: 70, right: 70),
-                            //   child:
-                            // ),
                             const Divider(thickness: 0, color: Colors.white),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -354,10 +348,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.secondName = secondNameController.text;
     userModel.userMode = modeController.text;
 
+    UserResumeCard resume = UserResumeCard(
+      positionName: "Test",
+      tellNumber: "1",
+      email: "emailtest",
+      social: "social",
+      skills: "skills",
+      experience: "experience",
+      imageLink:
+          "https://instagram.ftas5-1.fna.fbcdn.net/v/t51.2885-19/275533037_534615464600607_594752709445410002_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ftas5-1.fna.fbcdn.net&_nc_cat=103&_nc_ohc=QCaOvnpq_isAX8ptw_2&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT89_7xmEwOPU3kLwtiTBOSAoE-_uaOwI27xy7A5xynz7w&oe=624BAC78&_nc_sid=7bff83",
+      dateOfBirth: "01.01.2012",
+      resumeLink: "blabla",
+      universityName: "Narxoz",
+    );
+
     await firebaseFirestore
         .collection('users')
         .doc(user.uid)
         .set(userModel.toMap());
+
     Fluttertoast.showToast(msg: 'Account created successfully');
     Navigator.pop(context);
   }

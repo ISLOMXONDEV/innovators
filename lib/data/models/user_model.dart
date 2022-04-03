@@ -26,3 +26,58 @@ class UserModel {
     };
   }
 }
+
+class UserResumeCard {
+  String? positionName;
+  String? dateOfBirth;
+  String? universityName;
+  String? skills;
+  String? experience;
+  String? imageLink;
+  String? resumeLink;
+  String? tellNumber;
+  String? email;
+  String? social;
+
+  UserResumeCard({
+    this.positionName,
+    this.tellNumber,
+    this.email,
+    this.social,
+    this.skills,
+    this.experience,
+    this.imageLink,
+    this.dateOfBirth,
+    this.resumeLink,
+    this.universityName,
+  });
+
+  factory UserResumeCard.fromMap(map) {
+    return UserResumeCard(
+      positionName: map['positionName'],
+      skills: map['skills'],
+      tellNumber: map['tellNumber'],
+      email: map['email'],
+      social: map['social'],
+      experience: map['experience'],
+      imageLink: map['imageLink'],
+      dateOfBirth: map['dateOfBirth'],
+      resumeLink: map['resumeLink'],
+      universityName: map['universityName'],
+    );
+  }
+  Map<String, dynamic> toMap() {
+    return {
+      'positionName': positionName,
+      'skills': skills,
+      'experience': experience,
+      'tellNumber': tellNumber,
+      'email': email,
+      'social': social,
+      'imageLink': imageLink,
+      'dateOfBirth': dateOfBirth,
+      'resumeLink': resumeLink,
+      'universityName': universityName,
+    };
+  }
+}
