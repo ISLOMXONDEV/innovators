@@ -4,9 +4,15 @@ class UserModel {
   String? firstName;
   String? secondName;
   String? userMode;
+  String? status;
 
   UserModel(
-      {this.uid, this.email, this.firstName, this.secondName, this.userMode});
+      {this.uid,
+      this.email,
+      this.firstName,
+      this.secondName,
+      this.userMode,
+      this.status});
 
   factory UserModel.fromMap(map) {
     return UserModel(
@@ -14,7 +20,8 @@ class UserModel {
         email: map['email'],
         firstName: map['firstName'],
         secondName: map['secondName'],
-        userMode: map['userMode']);
+        userMode: map['userMode'],
+        status: map['status']);
   }
   Map<String, dynamic> toMap() {
     return {
@@ -22,7 +29,34 @@ class UserModel {
       'email': email,
       'firstName': firstName,
       'secondName': secondName,
+      'status': status,
       'userMode': userMode
+    };
+  }
+}
+
+class Post {
+  String? author;
+  String? content;
+  String? category;
+  String? time;
+
+  Post({this.author, this.content, this.category, this.time});
+
+  factory Post.fromMap(map) {
+    return Post(
+      author: map['author'],
+      content: map['content'],
+      category: map['category'],
+      time: map['time'],
+    );
+  }
+  Map<String, dynamic> toMap() {
+    return {
+      'author': author,
+      'content': content,
+      'category': category,
+      'time': time,
     };
   }
 }
@@ -38,19 +72,22 @@ class UserResumeCard {
   String? tellNumber;
   String? email;
   String? social;
+  String? tgAccount;
+  String? about;
 
-  UserResumeCard({
-    this.positionName,
-    this.tellNumber,
-    this.email,
-    this.social,
-    this.skills,
-    this.experience,
-    this.imageLink,
-    this.dateOfBirth,
-    this.resumeLink,
-    this.universityName,
-  });
+  UserResumeCard(
+      {this.positionName,
+      this.tellNumber,
+      this.email,
+      this.social,
+      this.skills,
+      this.experience,
+      this.imageLink,
+      this.dateOfBirth,
+      this.resumeLink,
+      this.universityName,
+      this.tgAccount,
+      this.about});
 
   factory UserResumeCard.fromMap(map) {
     return UserResumeCard(
@@ -64,6 +101,8 @@ class UserResumeCard {
       dateOfBirth: map['dateOfBirth'],
       resumeLink: map['resumeLink'],
       universityName: map['universityName'],
+      tgAccount: map['tgAccount'],
+      about: map['about'],
     );
   }
   Map<String, dynamic> toMap() {
@@ -78,6 +117,8 @@ class UserResumeCard {
       'dateOfBirth': dateOfBirth,
       'resumeLink': resumeLink,
       'universityName': universityName,
+      'tgAccount': tgAccount,
+      'about': about,
     };
   }
 }

@@ -37,7 +37,9 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
                       child: TextButton(
-                        child: Text(provider.status),
+                        child: Text(provider.loggedInUser?.status == 'on'
+                            ? "open to work"
+                            : "not searching for job"),
                         onPressed: () {
                           showModalBottomSheet(
                               shape: const RoundedRectangleBorder(
@@ -48,58 +50,59 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                               context: context,
                               isScrollControlled: true,
                               builder: (context) {
-                                statusOfEmployer? statusEnum =
-                                    statusOfEmployer.openToWork;
-
-                                return Container(
+                                return SizedBox(
                                   height:
                                       MediaQuery.of(context).size.height / 2,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       ListTile(
-                                        title: Text(provider.status),
+                                        title: const Text("Open to work"),
                                         leading: Radio(
-                                          value: statusOfEmployer.openToWork,
-                                          groupValue: statusEnum,
-                                          onChanged: (statusOfEmployer? value) {
+                                          value: 'on',
+                                          groupValue: String,
+                                          onChanged: (Object? value) {
                                             setState(() {
-                                              provider.status = "open to work";
-                                              statusEnum = value;
+                                              provider.loggedInUser?.status ==
+                                                  "on";
+                                              provider.updateStatus(
+                                                  value.toString());
                                             });
                                           },
                                         ),
                                       ),
                                       ListTile(
-                                        title: Text(provider.status),
+                                        title:
+                                            const Text("Not searching to job"),
                                         leading: Radio(
-                                          value:
-                                              statusOfEmployer.notSearchingWork,
-                                          groupValue: statusEnum,
-                                          onChanged: (statusOfEmployer? value) {
+                                          value: 'of',
+                                          groupValue: String,
+                                          onChanged: (Object? value) {
                                             setState(() {
-                                              provider.status =
-                                                  "not searching to job ";
-                                              statusEnum = value;
+                                              provider.loggedInUser?.status ==
+                                                  "off";
+                                              provider.updateStatus(
+                                                  value.toString());
                                             });
                                           },
                                         ),
                                       ),
-                                      ListTile(
-                                        title: Text(provider.status),
-                                        leading: Radio(
-                                          value: statusOfEmployer
-                                              .activelySearchingForJob,
-                                          groupValue: statusEnum,
-                                          onChanged: (statusOfEmployer? value) {
-                                            setState(() {
-                                              provider.status =
-                                                  "Actively searching for job";
-                                              statusEnum = value;
-                                            });
-                                          },
-                                        ),
-                                      ),
+                                      // ListTile(
+                                      //   title:
+                                      //       Text("Actively searching for job"),
+                                      //   leading: Radio(
+                                      //     value: statusOfEmployer
+                                      //         .activelySearchingForJob,
+                                      //     groupValue: statusEnum,
+                                      //     onChanged: (statusOfEmployer? value) {
+                                      //       setState(() {
+                                      //         provider.status =
+                                      //             "Actively searching for job";
+                                      //         statusEnum = value;
+                                      //       });
+                                      //     },
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
                                 );
@@ -115,7 +118,7 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         width: MediaQuery.of(context).size.width - 30,
-                        height: 400,
+                        height: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(15)),
@@ -198,14 +201,24 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 50),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 50),
                                   child: Align(
                                     alignment: Alignment.topRight,
                                     child: CircleAvatar(
                                       radius: 40.0,
-                                      backgroundImage: NetworkImage(
-                                        "${provider.userResumeCard?.imageLink}",
+                                      backgroundImage:
+                                          // provider.userResumeCard?.imageLink !=
+                                          //             null ||
+                                          //         provider.userResumeCard
+                                          //                 ?.imageLink !=
+                                          //             'null'
+                                          //     // ? NetworkImage(
+                                          //     "${provider.userResumeCard?.imageLink}",
+                                          //   )
+                                          //  :
+                                          NetworkImage(
+                                        "https://images.pexels.com/photos/52608/pexels-photo-52608.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
                                       ),
                                     ),
                                   ),
@@ -263,11 +276,22 @@ class _UserInfoWidgetState extends State<UserInfoWidget> {
                                       ),
                                     ],
                                   ),
-                                  Align(
-                                    alignment: Alignment.topLeft,
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width - 200,
+                                    color: Colors.grey[100],
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 38.0),
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(
+                                        child: Text(
+                                            "About me: \n${provider.userResumeCard?.about}"),
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8),
                                       child: ElevatedButton(
                                         onPressed: () {},
                                         child: const Text("See Resume file "),

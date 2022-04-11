@@ -2,38 +2,53 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:innovators/data/models/projects_model.dart';
 import 'package:innovators/data/models/user_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/core.dart';
 import '../../data/provider_values.dart';
 
-class ResumeForm extends StatefulWidget {
-  ResumeForm({Key? key}) : super(key: key);
+class ResumeEdit extends StatefulWidget {
+  ResumeEdit({Key? key}) : super(key: key);
 
   @override
-  State<ResumeForm> createState() => _ResumeFormState();
+  State<ResumeEdit> createState() => _ResumeEditState();
 }
 
-class _ResumeFormState extends State<ResumeForm> {
+class _ResumeEditState extends State<ResumeEdit> {
   int? initialIndex = 0;
 
   final _auth = FirebaseAuth.instance;
 
-  final _formKey = GlobalKey<FormState>();
-  final positionNameController = TextEditingController();
-  final tellNumberController = TextEditingController();
-  final emailController = TextEditingController();
-  final socialController = TextEditingController();
-  final skillsController = TextEditingController();
-  final experienceController = TextEditingController();
-  final imageLinkController = TextEditingController();
-  final dateOfBirthController = TextEditingController();
-  final resumeLinkController = TextEditingController();
-  final universityNameController = TextEditingController();
+  var _formKey = GlobalKey<FormState>();
+
+  var positionNameController = TextEditingController();
+
+  var tellNumberController = TextEditingController();
+
+  var emailController = TextEditingController();
+
+  var socialController = TextEditingController();
+
+  var tgAccountController = TextEditingController();
+
+  var skillsController = TextEditingController();
+
+  var experienceController = TextEditingController();
+
+  var imageLinkController = TextEditingController();
+
+  var dateOfBirthController = TextEditingController();
+
+  var resumeLinkController = TextEditingController();
+
+  var universityNameController = TextEditingController();
+
+  bool firstTime = true;
 
   Widget userInput(TextEditingController userInput, String hintTitle,
-      {TextInputType? keyboardType}) {
+      {TextInputType? keyboardType, String? initialValue}) {
     return Container(
       decoration: BoxDecoration(
           color: Colors.blueGrey.shade200,
@@ -78,16 +93,41 @@ class _ResumeFormState extends State<ResumeForm> {
                 fontStyle: FontStyle.italic),
           ),
           keyboardType: keyboardType,
+          initialValue: initialValue,
         ),
       ),
     );
   }
 
   //
-
   @override
   Widget build(BuildContext context) {
     return Consumer<ScreenIndexProvider>(builder: (context, provider, child) {
+      if (firstTime) {
+        positionNameController = TextEditingController(
+            text: provider.userResumeCard?.positionName ?? "");
+        tellNumberController = TextEditingController(
+            text: provider.userResumeCard?.tellNumber ?? "");
+        emailController =
+            TextEditingController(text: provider.userResumeCard?.email ?? "");
+        socialController =
+            TextEditingController(text: provider.userResumeCard?.social ?? "");
+        tgAccountController = TextEditingController(
+            text: provider.userResumeCard?.tgAccount ?? "");
+        skillsController =
+            TextEditingController(text: provider.userResumeCard?.skills ?? "");
+        experienceController = TextEditingController(
+            text: provider.userResumeCard?.experience ?? "");
+        imageLinkController = TextEditingController(
+            text: provider.userResumeCard?.imageLink ?? "");
+        dateOfBirthController = TextEditingController(
+            text: provider.userResumeCard?.dateOfBirth ?? "");
+        resumeLinkController = TextEditingController(
+            text: provider.userResumeCard?.resumeLink ?? "");
+        universityNameController = TextEditingController(
+            text: provider.userResumeCard?.universityName ?? "");
+        firstTime = false;
+      }
       return Scaffold(
         //Container(child: images[provider.screenIndex!.toInt()]),
         resizeToAvoidBottomInset: false,
@@ -125,7 +165,7 @@ class _ResumeFormState extends State<ResumeForm> {
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
                               child: Text(
-                                'Create your resume',
+                                'Update your resume',
                                 style: TextStyle(
                                   fontSize: 30,
                                   fontFamily: "arial",
@@ -137,9 +177,11 @@ class _ResumeFormState extends State<ResumeForm> {
                           const SizedBox(height: 15),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: userInput(positionNameController,
-                                'Position name you want a practise',
-                                keyboardType: TextInputType.name),
+                            child: userInput(
+                              positionNameController,
+                              'Position name you want a practise',
+                              keyboardType: TextInputType.name,
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -149,8 +191,14 @@ class _ResumeFormState extends State<ResumeForm> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: userInput(
-                                socialController, 'Telegram username',
+                            child: userInput(socialController,
+                                'Instagram, Facebook or LinkedIn username',
+                                keyboardType: TextInputType.emailAddress),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: userInput(tgAccountController,
+                                'Telegram username without @ symbol',
                                 keyboardType: TextInputType.emailAddress),
                           ),
                           Padding(
@@ -223,6 +271,7 @@ class _ResumeFormState extends State<ResumeForm> {
     userResumeModel.skills = skillsController.text;
     userResumeModel.universityName = universityNameController.text;
     userResumeModel.experience = experienceController.text;
+    userResumeModel.tgAccount = tgAccountController.text;
     userResumeModel.dateOfBirth = dateOfBirthController.text;
     userResumeModel.resumeLink = resumeLinkController.text;
 
@@ -231,45 +280,15 @@ class _ResumeFormState extends State<ResumeForm> {
         .doc(uid)
         .collection("resume")
         .doc(uid)
-        .set(userResumeModel.toMap())
+        .update(userResumeModel.toMap())
         .then((value) {
-      Fluttertoast.showToast(msg: "Account created successfully");
+      Fluttertoast.showToast(msg: "Account edited successfully");
+      Provider.of<ScreenIndexProvider>(context, listen: false).readUser();
+      Navigator.pop(context);
     }).catchError((e) {
       Fluttertoast.showToast(msg: e.message);
-    });
-    Navigator.pop(context);
-  }
 
-  // postDetailsToFirestore() async {
-  //   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-  //
-  //   User? user = _auth.currentUser;
-  //
-  //   UserResumeCard userResumeCard = UserResumeCard();
-  //
-  //   // userModel.email = user!.email;
-  //   // userModel.uid = user.uid;
-  //   // userModel.firstName = positionNameController.text;
-  //   // userModel.secondName = tellNumberController.text;
-  //   // userModel.userMode = modeController.text;
-  //
-  //   UserResumeCard resume = UserResumeCard(
-  //     positionName: "Test",
-  //     tellNumber: "1",
-  //     email: "emailtest",
-  //     social: "social",
-  //     skills: "skills",
-  //     experience: "experience",
-  //     imageLink:
-  //         "https://instagram.ftas5-1.fna.fbcdn.net/v/t51.2885-19/275533037_534615464600607_594752709445410002_n.jpg?stp=dst-jpg_s150x150&_nc_ht=instagram.ftas5-1.fna.fbcdn.net&_nc_cat=103&_nc_ohc=QCaOvnpq_isAX8ptw_2&edm=ABfd0MgBAAAA&ccb=7-4&oh=00_AT89_7xmEwOPU3kLwtiTBOSAoE-_uaOwI27xy7A5xynz7w&oe=624BAC78&_nc_sid=7bff83",
-  //     dateOfBirth: "01.01.2012",
-  //     resumeLink: "blabla",
-  //     universityName: "Narxoz",
-  //   );
-  //
-  //   // await firebaseFirestore
-  //   //     .collection('users')
-  //   //     .doc(user.uid)
-  //   //     .set(userModel.toMap());
-  // }
+      Navigator.pop(context);
+    });
+  }
 }

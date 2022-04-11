@@ -42,10 +42,15 @@ class BottomUserInfo extends StatelessWidget {
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(20),
-                          child: Image.network(
-                            '${provider.userResumeCard?.imageLink}',
-                            fit: BoxFit.cover,
-                          ),
+                          child: provider.userResumeCard?.imageLink != null
+                              ? Image.network(
+                                  "${provider.userResumeCard!.imageLink.toString()}",
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.network(
+                                  "https://images.pexels.com/photos/8294560/pexels-photo-8294560.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                                  fit: BoxFit.cover,
+                                ),
                         ),
                       ),
                     ),
@@ -115,12 +120,15 @@ class BottomUserInfo extends StatelessWidget {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: Image.network(
-                          provider.userResumeCard?.imageLink == null
-                              ? "https://images.pexels.com/photos/2093252/pexels-photo-2093252.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                              : provider.userResumeCard!.imageLink.toString(),
-                          fit: BoxFit.cover,
-                        ),
+                        child: provider.userResumeCard?.imageLink != null
+                            ? Image.network(
+                                "${provider.userResumeCard!.imageLink.toString()}",
+                                fit: BoxFit.cover,
+                              )
+                            : Image.network(
+                                "https://images.pexels.com/photos/8294560/pexels-photo-8294560.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                                fit: BoxFit.cover,
+                              ),
                       ),
                     ),
                   ),
