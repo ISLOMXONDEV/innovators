@@ -234,9 +234,13 @@ class _ProjectFormState extends State<ProjectForm> {
         .doc(uid)
         .set(project.toMap())
         .then((value) {
+      Provider.of<ScreenIndexProvider>(context, listen: false).readProject();
+      Navigator.pop(context);
+
       Fluttertoast.showToast(msg: "Project created successfully");
     }).catchError((e) {
       print(e);
+
       Fluttertoast.showToast(msg: e.message);
     });
     context.watch<ScreenIndexProvider>().hasProject = true;

@@ -29,6 +29,8 @@ class _ResumeFormState extends State<ResumeForm> {
   final experienceController = TextEditingController();
   final imageLinkController = TextEditingController();
   final dateOfBirthController = TextEditingController();
+  final aboutController = TextEditingController();
+  final tgController = TextEditingController();
   final specializationController = TextEditingController();
   final resumeLinkController = TextEditingController();
   final universityNameController = TextEditingController();
@@ -84,8 +86,6 @@ class _ResumeFormState extends State<ResumeForm> {
     );
   }
 
-  //
-
   @override
   Widget build(BuildContext context) {
     return Consumer<ScreenIndexProvider>(builder: (context, provider, child) {
@@ -138,8 +138,13 @@ class _ResumeFormState extends State<ResumeForm> {
                           const SizedBox(height: 15),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: userInput(positionNameController,
-                                'Position name you want a practise',
+                            child: userInput(
+                                positionNameController, 'Your name ',
+                                keyboardType: TextInputType.name),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: userInput(aboutController, 'About yourself',
                                 keyboardType: TextInputType.name),
                           ),
                           Padding(
@@ -150,8 +155,13 @@ class _ResumeFormState extends State<ResumeForm> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
+                            child: userInput(tgController, 'Telegram username',
+                                keyboardType: TextInputType.emailAddress),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: userInput(
-                                socialController, 'Telegram username',
+                                socialController, 'Facebook username',
                                 keyboardType: TextInputType.emailAddress),
                           ),
                           Padding(
@@ -162,7 +172,7 @@ class _ResumeFormState extends State<ResumeForm> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: userInput(
-                                specializationController, 'Your Skills',
+                                specializationController, 'Your Specialization',
                                 keyboardType: TextInputType.emailAddress),
                           ),
                           Padding(
@@ -228,6 +238,8 @@ class _ResumeFormState extends State<ResumeForm> {
     userResumeModel.social = socialController.text;
     userResumeModel.tellNumber = tellNumberController.text;
     userResumeModel.skills = skillsController.text;
+    userResumeModel.about = aboutController.text;
+    userResumeModel.tgAccount = tgController.text;
     userResumeModel.specialization = specializationController.text;
     userResumeModel.universityName = universityNameController.text;
     userResumeModel.experience = experienceController.text;
@@ -241,9 +253,13 @@ class _ResumeFormState extends State<ResumeForm> {
         .doc(uid)
         .set(userResumeModel.toMap())
         .then((value) {
-      Fluttertoast.showToast(msg: "Account created successfully");
+      Provider.of<ScreenIndexProvider>(context, listen: false).readUser();
+
+      Fluttertoast.showToast(msg: "Resume created successfully");
     }).catchError((e) {
       Fluttertoast.showToast(msg: e.message);
+      Provider.of<ScreenIndexProvider>(context, listen: false).readUser();
+      Navigator.pop(context);
     });
     Navigator.pop(context);
   }

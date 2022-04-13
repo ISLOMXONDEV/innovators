@@ -120,7 +120,7 @@ class _JobSeekerDetailState extends State<JobSeekerDetail> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 20.0, top: 20),
+                      padding: const EdgeInsets.only(left: 20.0, top: 10),
                       child: Text(
                         "${widget.resume.specialization}",
                         style: const TextStyle(
@@ -130,7 +130,7 @@ class _JobSeekerDetailState extends State<JobSeekerDetail> {
                   ],
                 ),
                 const Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: EdgeInsets.all(2.0),
                   child: Divider(
                     thickness: 2,
                     indent: 30,
@@ -141,7 +141,7 @@ class _JobSeekerDetailState extends State<JobSeekerDetail> {
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 20.0, top: 20),
+                      padding: const EdgeInsets.only(left: 20.0, top: 5),
                       child: Container(
                         alignment: Alignment.center,
                         width: 150,
@@ -297,8 +297,8 @@ class _JobSeekerDetailState extends State<JobSeekerDetail> {
                           padding: const EdgeInsets.only(left: 30, top: 8),
                           child: Container(
                             alignment: Alignment.center,
-                            width: 100,
-                            height: 40,
+                            width: 80,
+                            height: 30,
                             decoration: BoxDecoration(
                               color: Colors.lightBlue,
                               boxShadow: [
@@ -314,7 +314,7 @@ class _JobSeekerDetailState extends State<JobSeekerDetail> {
                               "@${widget.resume.tgAccount}",
                               style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 14,
+                                  fontSize: 10,
                                   fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -329,11 +329,11 @@ class _JobSeekerDetailState extends State<JobSeekerDetail> {
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.all(18.0),
+                          padding: const EdgeInsets.all(10.0),
                           child: Container(
                             child: Text(
-                              "Details:\n\n${widget.resume.about}",
-                              style: const TextStyle(fontSize: 17),
+                              "Details:\n${widget.resume.about}",
+                              style: const TextStyle(fontSize: 14),
                             ),
                           ),
                         ),
@@ -345,10 +345,10 @@ class _JobSeekerDetailState extends State<JobSeekerDetail> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 18.0, vertical: 10),
+                              horizontal: 18.0, vertical: 5),
                           child: Text(
-                            "Requirements:\n\n${widget.resume.experience}",
-                            style: const TextStyle(fontSize: 17),
+                            "Requirements:\n${widget.resume.experience}",
+                            style: const TextStyle(fontSize: 14),
                           ),
                         ),
                         const Divider(
@@ -359,10 +359,10 @@ class _JobSeekerDetailState extends State<JobSeekerDetail> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 18.0, vertical: 10),
+                              horizontal: 18.0, vertical: 5),
                           child: Text(
-                            "Requirements:\n\n${widget.resume.skills}",
-                            style: const TextStyle(fontSize: 17),
+                            "Requirements:\n${widget.resume.skills}",
+                            style: const TextStyle(fontSize: 14),
                           ),
                         ),
                       ],

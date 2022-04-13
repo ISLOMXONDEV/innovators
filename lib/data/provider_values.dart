@@ -62,6 +62,27 @@ class ScreenIndexProvider extends ChangeNotifier {
     userResumeCard = userResume;
     notifyListeners();
   }
+  //
+  // Future<void> readResume() async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(loggedInUser!.uid)
+  //         .collection("resume")
+  //         .doc(loggedInUser!.uid)
+  //         .get()
+  //         .then((value) {
+  //       userResumeCard = UserResumeCard.fromMap(value.data());
+  //       hasResume = true;
+  //
+  //       resumeDefine(userResumeCard);
+  //       notifyListeners();
+  //     });
+  //   } catch (e) {
+  //     print(e);
+  //     Fluttertoast.showToast(msg: "$e");
+  //   }
+  // }
 
   void projectDefine(ProjectsModel? projectsModel) {
     project = projectsModel;

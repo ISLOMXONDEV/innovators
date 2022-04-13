@@ -122,7 +122,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.only(
-                                          top: 20.0, right: 2),
+                                          top: 20.0, right: 0),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -134,7 +134,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                 fontWeight: FontWeight.w600),
                                           ),
                                           Container(
-                                              width: 100,
+                                              width: 60,
                                               height: 30,
                                               decoration: BoxDecoration(
                                                 borderRadius:

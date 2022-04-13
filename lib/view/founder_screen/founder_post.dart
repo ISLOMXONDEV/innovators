@@ -172,6 +172,7 @@ class _PostVacancyState extends State<PostVacancy> {
     vacancy.telegramChatLink = contactTelegramUsernameController.text;
     await Provider.of<ScreenIndexProvider>(context, listen: false)
         .postVacancy(vacancy);
+
     locationController.clear();
     requirementsController.clear();
     detailsController.clear();

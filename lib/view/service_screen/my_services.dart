@@ -133,7 +133,7 @@ class _MyServicesState extends State<MyServices> {
                                                 fontWeight: FontWeight.w600),
                                           ),
                                           Container(
-                                              width: 100,
+                                              width: 70,
                                               height: 30,
                                               decoration: BoxDecoration(
                                                 borderRadius:
@@ -154,7 +154,7 @@ class _MyServicesState extends State<MyServices> {
                                                   "${provider.myServices[index].serviceTgAccount}",
                                                   style: const TextStyle(
                                                       color: Colors.white,
-                                                      fontSize: 20),
+                                                      fontSize: 10),
                                                 ),
                                               )),
                                         ],
