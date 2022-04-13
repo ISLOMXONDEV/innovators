@@ -14,14 +14,19 @@ class ScreenIndexProvider extends ChangeNotifier {
   bool hasProject = false;
   bool hasListOfVacancies = false;
   bool hasListOfService = false;
+  bool hasListOfJobSeeker = false;
   bool hasPosts = false;
+  bool hasMyService = false;
   var status = 'open for work';
   List<UserModel?>? projectsEmployee = [];
 
   ProjectsModel? project = ProjectsModel();
   List<Vacancy> docs = [];
+  List<UserResumeCard> jobSeekers = [];
   List<Post> posts = [];
+
   List<Service> services = [];
+  List<Service> myServices = [];
 
   // CollectionReference resumeGet = FirebaseFirestore.instance.collection('users').doc();
 
@@ -129,13 +134,18 @@ class ScreenIndexProvider extends ChangeNotifier {
   Future<List<Service>> readServices() async {
     QuerySnapshot querySnapshot;
     List<Service> servicess = [];
+    myServices.clear();
     try {
       querySnapshot =
           await FirebaseFirestore.instance.collection('services').get();
       if (querySnapshot.docs.isNotEmpty) {
         for (var doc in querySnapshot.docs.toList()) {
           Service a = Service.fromMap(doc.data());
+          if (a.serviceProviderID == loggedInUser?.uid) {
+            myServices.add(a);
+          }
           servicess.add(a);
+          print(a.serviceName);
         }
 
         hasListOfService = true;
@@ -145,6 +155,32 @@ class ScreenIndexProvider extends ChangeNotifier {
         return services;
       } else {
         return services;
+      }
+    } catch (e) {
+      Fluttertoast.showToast(msg: "$e");
+      throw ('$e');
+    }
+  }
+
+  Future<List<UserResumeCard>> readJobSeekers() async {
+    QuerySnapshot querySnapshot;
+    List<UserResumeCard> jobSeekerss = [];
+    try {
+      querySnapshot =
+          await FirebaseFirestore.instance.collection('jobSeekers').get();
+      if (querySnapshot.docs.isNotEmpty) {
+        for (var doc in querySnapshot.docs.toList()) {
+          UserResumeCard a = UserResumeCard.fromMap(doc.data());
+          jobSeekerss.add(a);
+        }
+
+        hasListOfService = true;
+        jobSeekers = jobSeekerss;
+        notifyListeners();
+
+        return jobSeekers;
+      } else {
+        return jobSeekers;
       }
     } catch (e) {
       Fluttertoast.showToast(msg: "$e");

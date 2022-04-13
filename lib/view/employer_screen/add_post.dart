@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:innovators/data/models/user_model.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -87,10 +88,15 @@ class _AddPostState extends State<AddPost> {
     post.author = "${user?.firstName} ${user?.secondName}";
     post.content = contentNameController.text;
     post.category = category;
-    post.time = DateTime.now().toString();
+
+    DateFormat dateFormat = DateFormat("dd-MM-yyyy HH:mm ");
+
+    String time = dateFormat.format(DateTime.now());
+    post.time = time;
 
     await Provider.of<ScreenIndexProvider>(context, listen: false)
         .addPost(post);
+    context.read<ScreenIndexProvider>().readPosts();
     authorController.clear();
     contentNameController.clear();
   }

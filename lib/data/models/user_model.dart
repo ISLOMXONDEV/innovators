@@ -74,20 +74,23 @@ class UserResumeCard {
   String? social;
   String? tgAccount;
   String? about;
+  String? specialization;
 
-  UserResumeCard(
-      {this.positionName,
-      this.tellNumber,
-      this.email,
-      this.social,
-      this.skills,
-      this.experience,
-      this.imageLink,
-      this.dateOfBirth,
-      this.resumeLink,
-      this.universityName,
-      this.tgAccount,
-      this.about});
+  UserResumeCard({
+    this.positionName,
+    this.tellNumber,
+    this.email,
+    this.social,
+    this.skills,
+    this.experience,
+    this.imageLink,
+    this.dateOfBirth,
+    this.resumeLink,
+    this.universityName,
+    this.tgAccount,
+    this.about,
+    this.specialization,
+  });
 
   factory UserResumeCard.fromMap(map) {
     return UserResumeCard(
@@ -103,6 +106,7 @@ class UserResumeCard {
       universityName: map['universityName'],
       tgAccount: map['tgAccount'],
       about: map['about'],
+      specialization: map['specialization'],
     );
   }
   Map<String, dynamic> toMap() {
@@ -119,6 +123,7 @@ class UserResumeCard {
       'universityName': universityName,
       'tgAccount': tgAccount,
       'about': about,
+      'specialization': specialization,
     };
   }
 }

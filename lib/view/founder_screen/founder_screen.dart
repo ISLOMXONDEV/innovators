@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:innovators/data/provider_values.dart';
+import 'package:innovators/view/founder_screen/employers_list.dart';
 import 'package:innovators/view/founder_screen/founder_post.dart';
 import 'package:innovators/view/founder_screen/project_edit.dart';
 import 'package:provider/provider.dart';
 
 import '../all_users_general_components/drawer.dart';
+import '../employer_screen/add_post.dart';
+import '../employer_screen/post_screen.dart';
 import 'founder_info_widget.dart';
 
 class FounderMainScreen extends StatefulWidget {
@@ -16,15 +19,10 @@ class FounderMainScreen extends StatefulWidget {
 
 class _FounderMainScreenState extends State<FounderMainScreen> {
   static const List<Widget> _pages = <Widget>[
-    Icon(
-      Icons.call,
-      size: 150,
-    ),
+    EmployersList(),
+    AddPost(),
     PostVacancy(),
-    Icon(
-      Icons.chat,
-      size: 150,
-    ),
+    PostsScreen(),
     FounderInfoWidget(),
   ];
 
@@ -50,13 +48,15 @@ class _FounderMainScreenState extends State<FounderMainScreen> {
           backgroundColor: Colors.grey.shade100,
           appBar: AppBar(
             backgroundColor: Colors.blueAccent,
-            title: _selectedIndex == 3
+            title: _selectedIndex == 4
                 ? Text("Project Info")
-                : _selectedIndex == 2
-                    ? Text("Actions")
-                    : _selectedIndex == 1
+                : _selectedIndex == 3
+                    ? Text("Disscussion")
+                    : _selectedIndex == 2
                         ? Text("Add")
-                        : Text('Main'),
+                        : _selectedIndex == 1
+                            ? Text("Post")
+                            : Text('Main'),
             actions: [
               _selectedIndex == 3
                   ? Padding(
@@ -97,11 +97,15 @@ class _FounderMainScreenState extends State<FounderMainScreen> {
                 label: 'Main',
               ),
               BottomNavigationBarItem(
+                icon: Icon(Icons.messenger),
+                label: 'Post',
+              ),
+              BottomNavigationBarItem(
                 icon: Icon(Icons.add_box),
                 label: 'Add',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.chat),
+                icon: Icon(Icons.mark_chat_unread_rounded),
                 label: 'Actions',
               ),
               BottomNavigationBarItem(

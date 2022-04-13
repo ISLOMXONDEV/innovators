@@ -102,7 +102,7 @@ class _EmployerMainScreenState extends State<EmployerMainScreen> {
             currentIndex: _selectedIndex.toInt(),
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                icon: Icon(Icons.call),
+                icon: Icon(Icons.work),
                 label: 'Main',
               ),
               BottomNavigationBarItem(

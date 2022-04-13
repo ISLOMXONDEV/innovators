@@ -5,14 +5,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/provider_values.dart';
 
-class ExploreScreen extends StatefulWidget {
-  const ExploreScreen({Key? key}) : super(key: key);
+class MyServices extends StatefulWidget {
+  const MyServices({Key? key}) : super(key: key);
 
   @override
-  State<ExploreScreen> createState() => _ExploreScreenState();
+  State<MyServices> createState() => _MyServicesState();
 }
 
-class _ExploreScreenState extends State<ExploreScreen> {
+class _MyServicesState extends State<MyServices> {
   bool _hasCallSupport = false;
   Future<void>? _launched;
 
@@ -35,7 +35,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ? Padding(
                   padding: const EdgeInsets.only(top: 18.0),
                   child: ListView.builder(
-                    itemCount: provider.services.length,
+                    itemCount: provider.myServices.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Padding(
                         padding:
@@ -77,17 +77,16 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                               height: 40,
                                               child: Center(
                                                 child: Text(
-                                                  '${provider.services[index].serviceName}',
+                                                  '${provider.myServices[index].serviceName}',
                                                   style: const TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 12),
+                                                      color: Colors.black),
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
                                         Container(
-                                          width: 120,
+                                          width: 100,
                                           height: 40,
                                           decoration: BoxDecoration(
                                               boxShadow: [
@@ -103,7 +102,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                               color: Colors.white),
                                           child: Center(
                                             child: Text(
-                                              provider.services[index]
+                                              provider.myServices[index]
                                                   .serviceProvider
                                                   .toString(),
                                               style: const TextStyle(
@@ -115,7 +114,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                       ],
                                     ),
                                     Text(
-                                      'Details:\n\n${provider.services[index].serviceDetails}',
+                                      'Details:\n\n${provider.myServices[index].serviceDetails}',
                                       style: const TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.w600),
@@ -128,7 +127,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Location:\n${provider.services[index].serviceLocation}',
+                                            'Location:\n${provider.myServices[index].serviceLocation}',
                                             style: const TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w600),
@@ -152,10 +151,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                               ),
                                               child: Center(
                                                 child: Text(
-                                                  "${provider.services[index].serviceTgAccount}",
+                                                  "${provider.myServices[index].serviceTgAccount}",
                                                   style: const TextStyle(
                                                       color: Colors.white,
-                                                      fontSize: 12),
+                                                      fontSize: 20),
                                                 ),
                                               )),
                                         ],
@@ -170,11 +169,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                         children: [
                                           OutlinedButton(
                                             onPressed: () {
-                                              if (provider.services[index]
+                                              if (provider.myServices[index]
                                                       .serviceTgAccount !=
                                                   null) {
                                                 _launchUrl(
-                                                    "https://t.me/${provider.services[index].serviceTgAccount}");
+                                                    "https://t.me/${provider.myServices[index].serviceTgAccount}");
                                               } else {
                                                 Fluttertoast.showToast(
                                                     msg:
@@ -198,7 +197,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                 ? () => setState(() {
                                                       _launched = _makePhoneCall(
                                                           provider
-                                                              .services[index]
+                                                              .myServices[index]
                                                               .serviceContactNumber
                                                               .toString());
                                                     })
@@ -241,7 +240,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        "\$ ${provider.services[index].servicePayment} monthly",
+                                        "\$ ${provider.myServices[index].servicePayment} monthly",
                                         style: const TextStyle(
                                             color: Colors.white),
                                       ),
@@ -256,9 +255,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        "+${provider.services[index].serviceContactNumber}",
+                                        "+${provider.myServices[index].serviceContactNumber}",
                                         style: const TextStyle(
-                                            fontSize: 12, color: Colors.white),
+                                            color: Colors.white),
                                       ),
                                     ),
                                   ),

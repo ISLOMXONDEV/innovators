@@ -15,6 +15,8 @@ import '../all_users_general_components/errorScreen.dart';
 class WelcomeScreen extends StatefulWidget {
   static const String routeName = "/welcome_screen";
 
+  const WelcomeScreen({Key? key}) : super(key: key);
+
   @override
   State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
@@ -116,6 +118,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           ),
                           onPressed: () {
                             provider.updateUser(loggedInUser);
+                            provider.readVacancy();
+                            provider.readServices();
+                            provider.readPosts();
+                            provider.readJobSeekers();
+                            provider.readProject();
+                            provider.readUser();
                             var result = userResumeCard?.positionName;
                             if (result != null) {
                               provider.resumeDefine(userResumeCard);
@@ -124,7 +132,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                             var project = projectsModel?.projectsName;
                             if (project != null) {
                               provider.projectDefine(projectsModel);
-                              print(provider.project?.projectsName);
                               provider.hasProject = true;
                             }
 
@@ -135,21 +142,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            ServiceMainScreen()));
+                                            const ServiceMainScreen()));
                               } else if (loggedInUser?.userMode == "founder") {
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            FounderMainScreen()));
+                                            const FounderMainScreen()));
                               } else if (loggedInUser?.userMode == "employee") {
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            EmployerMainScreen()));
+                                            const EmployerMainScreen()));
                               } else {
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                        builder: (context) => ErrorScreen()));
+                                        builder: (context) =>
+                                            const ErrorScreen()));
                               }
                             }
                           },

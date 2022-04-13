@@ -29,6 +29,7 @@ class _ResumeFormState extends State<ResumeForm> {
   final experienceController = TextEditingController();
   final imageLinkController = TextEditingController();
   final dateOfBirthController = TextEditingController();
+  final specializationController = TextEditingController();
   final resumeLinkController = TextEditingController();
   final universityNameController = TextEditingController();
 
@@ -160,6 +161,12 @@ class _ResumeFormState extends State<ResumeForm> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
+                            child: userInput(
+                                specializationController, 'Your Skills',
+                                keyboardType: TextInputType.emailAddress),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
                             child: userInput(experienceController, 'Experience',
                                 keyboardType: TextInputType.emailAddress),
                           ),
@@ -221,6 +228,7 @@ class _ResumeFormState extends State<ResumeForm> {
     userResumeModel.social = socialController.text;
     userResumeModel.tellNumber = tellNumberController.text;
     userResumeModel.skills = skillsController.text;
+    userResumeModel.specialization = specializationController.text;
     userResumeModel.universityName = universityNameController.text;
     userResumeModel.experience = experienceController.text;
     userResumeModel.dateOfBirth = dateOfBirthController.text;

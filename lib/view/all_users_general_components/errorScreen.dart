@@ -19,9 +19,9 @@ class _ErrorScreenState extends State<ErrorScreen> {
               context,
               WelcomeScreen.routeName,
             );
-            Navigator.pop(context);
+            // Navigator.pop(context);
           },
-          child: const Text('Refresh'),
+          child: const Text('Oops your internet connection is bad'),
         ),
       ),
     );

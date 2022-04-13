@@ -28,7 +28,7 @@ class _PostsScreenState extends State<PostsScreen> {
                         child: Container(
                           height: 250,
                           child: Card(
-                            color: Colors.blue[100],
+                            color: Colors.white,
                             child: ListTile(
                               minLeadingWidth: 30,
                               title: SingleChildScrollView(
@@ -41,7 +41,7 @@ class _PostsScreenState extends State<PostsScreen> {
                                         child: Container(
                                           decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(10),
+                                                BorderRadius.circular(20),
                                             color: Colors.amber,
                                           ),
                                           width: 80,
@@ -59,7 +59,7 @@ class _PostsScreenState extends State<PostsScreen> {
                                     Text(
                                       '${provider.posts[index].content}',
                                       style: const TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 17,
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ],
@@ -70,8 +70,8 @@ class _PostsScreenState extends State<PostsScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                      width: 100,
-                                      height: 25,
+                                      width: 120,
+                                      height: 26,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.green,
@@ -80,22 +80,23 @@ class _PostsScreenState extends State<PostsScreen> {
                                         child: Text(
                                           provider.posts[index].time.toString(),
                                           style: const TextStyle(
-                                              color: Colors.white),
+                                              color: Colors.white,
+                                              fontSize: 12),
                                         ),
                                       )),
                                   Container(
-                                      width: 100,
+                                      width: 120,
                                       height: 25,
                                       decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
-                                          color: Colors.white),
+                                          color: Colors.grey[300]),
                                       child: Center(
                                         child: Text(
                                           provider.posts[index].author
                                               .toString(),
                                           style: const TextStyle(
-                                              fontSize: 10,
+                                              fontSize: 12,
                                               color: Colors.black),
                                         ),
                                       )),
