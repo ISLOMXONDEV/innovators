@@ -118,7 +118,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   Future<void> logout(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(prefs.getString(USER_MODE));
     prefs.remove(USER_MODE);
 
     await FirebaseAuth.instance.signOut();

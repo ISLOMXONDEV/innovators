@@ -58,7 +58,7 @@ class _FounderMainScreenState extends State<FounderMainScreen> {
                             ? Text("Post")
                             : Text('Main'),
             actions: [
-              _selectedIndex == 3
+              _selectedIndex == 4
                   ? Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: IconButton(

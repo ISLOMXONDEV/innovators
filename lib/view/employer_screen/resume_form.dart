@@ -204,6 +204,9 @@ class _ResumeFormState extends State<ResumeForm> {
                                 keyboardType: TextInputType.emailAddress),
                           ),
                           const Divider(thickness: 0, color: Colors.white),
+                          const SizedBox(
+                            height: 300,
+                          ),
                         ],
                       ),
                     ),

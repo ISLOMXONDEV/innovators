@@ -217,11 +217,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     //   RegistrationPage.routeName,
                                     // );
                                   },
-                                  child: const Text(
-                                    'Continue  as \n Guest User',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
+                                  child: const Padding(
+                                    padding: EdgeInsets.only(top: 150.0),
+                                    child: Text(
+                                      'Continue  as \n Guest User',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
                                   ),
                                 ),
                               ],

@@ -182,6 +182,9 @@ class _ProjectFormState extends State<ProjectForm> {
                             ),
 
                             const Divider(thickness: 0, color: Colors.white),
+                            const SizedBox(
+                              height: 250,
+                            )
                           ],
                         ),
                       ),

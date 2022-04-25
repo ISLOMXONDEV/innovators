@@ -223,6 +223,5 @@ class _AddServiceState extends State<AddService> {
       Fluttertoast.showToast(msg: e.message);
     });
     context.watch<ScreenIndexProvider>().hasProject = true;
-    Navigator.pop(context);
   }
 }
